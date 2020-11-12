@@ -1,52 +1,28 @@
-import { html } from "https://unpkg.com/lit-html/lit-html.js";
-import { component } from "https://unpkg.com/haunted/haunted.js";
-import { getAllRequiredInputs } from "../functions/functions.js";
+import { html, component } from "haunted";
+import { submitForm } from "../functions/functions.js";
+import { States } from "../modules/States.js";
 
 export function AddStore() {
-  //This function makes the asynchronous call to submit the function.
-  /**
-   *
-   * @param {Event} e
-   */
-  const submitForm = (e) => {
-    const requiredInputs = getAllRequiredInputs(e);
-
-    let obj = {};
-    for (const input of requiredInputs) {
-      input.reportValidity();
-      obj = { ...obj, [input.name]: input.value };
-    }
-    fetch(
-      "https://www.nannosfoodsdev.bitnamiapp.com/addStoreJSONResponseMike.php",
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(obj),
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => JSON.parse(res))
-      .then((obj) => {
-        if (obj.result == "success") {
-          console.dir(obj);
-          window.location.assign("../employeeMenu/");
-        } else {
-          //Reset all input element's values.
-          e.target.reset();
-          alert("Insert Failed.");
-        }
-      })
-      .catch((error) => alert(error));
-  };
-
   return html`
     <form
       @submit=${(e) => {
-        e.preventDefault();
-          submitForm(e);
+        submitForm(
+          e,
+          "https://www.nannosfoods.codes/addStoreJSONResponseMike.php"
+        )
+          .then((res) => res.json())
+          .then((res) => JSON.parse(res))
+          .then((obj) => {
+            if (obj.result == "success") {
+              console.dir(obj);
+              window.location.assign("/employeeMenu");
+            } else {
+              //Reset all input element's values.
+              e.target.reset();
+              alert("Insert Failed.");
+            }
+          })
+          .catch((error) => alert(error));
       }}
     >
       <div className="container">
@@ -57,6 +33,7 @@ export function AddStore() {
           type="text"
           placeholder="Enter Store Code"
           pattern="[0-9]{1,9}"
+          title="Please Enter a Numeric Store Code"
           name="StoreCode"
           required
         /><br />
@@ -66,7 +43,8 @@ export function AddStore() {
         <input
           type="text"
           placeholder="Store Name"
-          pattern="[a-z A-Z]{1,20}"
+          pattern="[a-z A-Z0-9]{1,20}"
+          title="Please Only use characters a-z A-Z 0-9 and ' '"
           maxlength="20"
           name="StoreName"
           required
@@ -77,7 +55,9 @@ export function AddStore() {
         <input
           type="text"
           placeholder="Address"
-          maxlength="30"
+          pattern="[a-z A-Z,0-9]{1,50}"
+          title="Please Only Use Characters a-z A-Z 0-9 , and ' '"
+          maxlength="50"
           name="Address"
           required
         /><br />
@@ -89,20 +69,16 @@ export function AddStore() {
           placeholder="City"
           pattern="[a-z A-Z]{1,20}"
           maxlength="20"
+          title="Please only use Alphabetic Characters"
           name="City"
           required
         /><br />
         <label htmlFor="State">
           <b>State</b>
         </label>
-        <input
-          type="text"
-          placeholder="State"
-          pattern="[a-zA-Z]{2}"
-          maxlength="2"
-          name="State"
-          required
-        /><br />
+        <select name="State" required>
+          ${States()}</select
+        ><br />
         <label htmlFor="Zip">
           <b>Zip</b>
         </label>
@@ -110,6 +86,7 @@ export function AddStore() {
           type="text"
           placeholder="Zip Code"
           pattern="[0-9]{5}"
+          title="Please enter numeric 5 digit zip codes only"
           maxlength="5"
           name="Zip"
           required
@@ -121,6 +98,7 @@ export function AddStore() {
           type="text"
           placeholder="Phone Number"
           pattern="[0-9]{10}"
+          title="Please enter phone numbers in format ########## (No dashes)"
           maxlength="10"
           name="Phone"
           required
@@ -132,6 +110,7 @@ export function AddStore() {
           type="text"
           placeholder="Manager Name"
           pattern="[a-z A-Z]{1,20}"
+          title="Please use alphabetic characters only"
           maxlength="20"
           name="ManagerName"
           required

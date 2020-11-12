@@ -1,6 +1,5 @@
-import { html } from "https://unpkg.com/lit-html/lit-html.js";
-import { component } from "https://unpkg.com/haunted/haunted.js";
-
+//import { html } from "https://unpkg.com/lit-html/lit-html.js";
+import { html, component } from "haunted";
 export function Navbar() {
   return html`
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -27,11 +26,7 @@ export function Navbar() {
             >
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="http://nannosfoodsdev.bitnamiapp.com//vendorLogin.php"
-              >Vendor Login</a
-            >
+            <a class="nav-link" href="/">Vendor Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/">About Us</a>
