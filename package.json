@@ -1,0 +1,23 @@
+{
+  "name": "nannosFrontEnd",
+  "version": "1.0.0",
+  "description": "[![Netlify Status](https://api.netlify.com/api/v1/badges/7ddc6d3e-644c-4550-8031-a4e0057bd1ef/deploy-status)](https://app.netlify.com/sites/nannosfoodsdev/deploys)\r The repository shared by our group to practice the stuff applied in class. (And potentially for our product we will be building).",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpsoccerdude101/nannosFrontEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dpsoccerdude101/nannosFrontEnd/issues"
+  },
+  "homepage": "https://github.com/dpsoccerdude101/nannosFrontEnd#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
